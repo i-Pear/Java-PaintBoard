@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerAdapter">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -32,16 +31,7 @@
       </MenuBar>
    </top>
    <center>
-      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
-        <tabs>
-            <Tab text="Untitled Tab 1">
-                <ScrollPane layoutY="7.0" prefHeight="200.0" prefWidth="200.0">
-                  <content>
-                     <Canvas fx:id="canvas1" height="278.0" onMouseDragged="#mouseMove" onMousePressed="#mouseDown" onMouseReleased="#mouseRelease" width="535.0" />
-                  </content></ScrollPane>
-            </Tab>
-        </tabs>
-      </TabPane>
+      <TabPane fx:id="_tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
    </center>
    <right>
    </right>

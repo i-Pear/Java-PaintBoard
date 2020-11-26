@@ -7,11 +7,14 @@ import java.io.Serializable;
 
 public abstract class Layer implements Serializable {
 
-    enum LayerType{LINE,OVAL,RECTANGLE,TEXT};
+    enum LayerType{LINE,OVAL,RECTANGLE,CIRCLE,TEXT}
 
-    enum FillType{NO,FILL};
+    enum FillType{NO,FILL}
 
-    Color color;
+    LayerType layerType;
+    FillType fillType=FillType.NO;
+    Color color=Color.BLUE;
+    double width=5;
 
     public abstract void draw(GraphicsContext graphics);
 

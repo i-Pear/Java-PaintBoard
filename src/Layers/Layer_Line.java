@@ -9,6 +9,7 @@ public class Layer_Line extends Layer {
 
     @Override
     public void draw(GraphicsContext graphics) {
+        graphics.setFill(color);
         graphics.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
 
