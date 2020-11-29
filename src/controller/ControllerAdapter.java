@@ -7,6 +7,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import Main.LayersControl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ControllerAdapter {
@@ -24,6 +25,11 @@ public class ControllerAdapter {
     @FXML
     public void tabChange(){
         LayersControl.getInstance().tabChange();
+    }
+
+    @FXML
+    public void saveFile() throws IOException {
+        LayersControl.getInstance().getLayerGroup().saveFileWithLayers("123");
     }
 
 }

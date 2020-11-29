@@ -23,7 +23,7 @@ public class Layer_Rectangle extends Layer{
 
     @Override
     public void draw(GraphicsContext graphics) {
-        graphics.setFill(color);
+        graphics.setFill(color.getColor());
         switch (fillType){
             case NO:
                 graphics.strokeRect(leftUpper.getX(),leftUpper.getY(),rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());

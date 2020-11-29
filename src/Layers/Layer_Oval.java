@@ -16,7 +16,7 @@ public class Layer_Oval extends Layer{
 
     @Override
     public void draw(GraphicsContext graphics) {
-        graphics.setFill(color);
+        graphics.setFill(color.getColor());
         switch (fillType){
             case NO:
                 graphics.strokeOval(leftUpper.getX(),leftUpper.getY(),rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());

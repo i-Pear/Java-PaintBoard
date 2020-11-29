@@ -2,6 +2,7 @@ package Layers;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.io.Serializable;
 
@@ -13,7 +14,7 @@ public abstract class Layer implements Serializable {
 
     LayerType layerType;
     FillType fillType=FillType.NO;
-    Color color=Color.BLUE;
+    ColorInfo color=new ColorInfo(Color.BLUE);
     double width=5;
 
     public abstract void draw(GraphicsContext graphics);

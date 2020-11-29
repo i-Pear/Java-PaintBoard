@@ -13,7 +13,7 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#newFile" text="New" />
                   <MenuItem mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
                   <MenuItem mnemonicParsing="false" text="Export" />
             </items>
           </Menu>
@@ -22,6 +22,12 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Paint">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <RadioMenuItem mnemonicParsing="false" selected="true" text="Unspecified Action" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem mnemonicParsing="false" text="About" />
@@ -31,7 +37,18 @@
       </MenuBar>
    </top>
    <center>
-      <TabPane fx:id="_tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+       <BorderPane>
+         <center>
+             <TabPane fx:id="_tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+         </center>
+         <left>
+            <ToolBar orientation="VERTICAL" prefHeight="345.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" text="Button" />
+              </items>
+            </ToolBar>
+         </left>
+       </BorderPane>
    </center>
    <right>
    </right>
