@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 
 import java.lang.reflect.Array;
@@ -60,6 +62,12 @@ public class LayersControl {
         ControllerAdapter.tabPane.getTabs().add(tab);
 
         layerGroups.add(new LayerGroup());
+    }
+
+    public WritableImage getSnapshot(){
+        WritableImage image=new WritableImage((int)getInstance().canvas.get(activeID).getWidth(),(int)getInstance().canvas.get(activeID).getHeight());
+        canvas.get(activeID).snapshot(null,image);
+        return image;
     }
 
     public void tabChange(){

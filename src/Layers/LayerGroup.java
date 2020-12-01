@@ -12,25 +12,30 @@ import java.util.Arrays;
 public class LayerGroup implements Serializable {
 
     ArrayList<Layer> layers;
+    String fileName;
 
-    public LayerGroup(){
-        layers=new ArrayList<>();
+    public LayerGroup() {
+        layers = new ArrayList<>();
     }
 
-    public void appendLayer(Layer layer){
+    public void appendLayer(Layer layer) {
         layers.add(layer);
     }
 
-    public void draw(GraphicsContext graphics){
-        for(Layer layer:layers){
+    public void draw(GraphicsContext graphics) {
+        for (Layer layer : layers) {
             layer.draw(graphics);
         }
     }
 
-    public void saveFileWithLayers(String fileName) throws IOException {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
-            objectOutputStream.writeObject(this);
-            objectOutputStream.close();
+    public void saveFileWithLayers() throws IOException {
+        if(fileName==null){
+            // ask for fileName
+
+        }
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
     }
 
 }
