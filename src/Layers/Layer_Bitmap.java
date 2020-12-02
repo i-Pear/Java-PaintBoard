@@ -16,4 +16,12 @@ public class Layer_Bitmap extends Layer {
         // graphics.draw
     }
 
+    @Override
+    public boolean isInner(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public void applyShifting(){}
+
 }

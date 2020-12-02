@@ -26,7 +26,7 @@ public class ControllerAdapter implements Initializable {
     public static ControllerAdapter instance;
 
     public enum Input_status{SELECT,PEN,LINE,RECTANGLE,CIRCLE,ELLIPSE,TEXT}
-    public static Input_status input_status;
+    public static Input_status input_status=Input_status.SELECT;
 
     @FXML
     Button buttonSelect,buttonFreePen,buttonLine,buttonRectangle,buttonCircle,buttonEllipse,buttonText;

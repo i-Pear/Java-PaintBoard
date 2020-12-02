@@ -11,6 +11,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class LayersControl {
     }
 
     public void repaint(){
+        getInstance().getActiveGraphics().getGraphicsContext2D().setFill(Color.WHITE);
+        getInstance().getActiveGraphics().getGraphicsContext2D().fillRect(0,0,LayersControl.getInstance().getActiveGraphics().getWidth(),LayersControl.getInstance().getActiveGraphics().getHeight());
         getInstance().getLayerGroup().draw(getInstance().getActiveGraphics().getGraphicsContext2D());
     }
 

@@ -23,8 +23,21 @@ public class Layer_Line extends Layer {
 
     @Override
     public void draw(GraphicsContext graphics) {
+        graphics.setLineWidth(width);
         graphics.setFill(color.getColor());
         graphics.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
+    }
+
+    @Override
+    public boolean isInner(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public void applyShifting() {
+        start=start.add(x_shifting,y_shifting);
+        end=end.add(x_shifting,y_shifting);
+        x_shifting=y_shifting=0;
     }
 
 }

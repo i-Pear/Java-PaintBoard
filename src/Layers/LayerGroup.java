@@ -28,6 +28,17 @@ public class LayerGroup implements Serializable {
         }
     }
 
+    public Layer getLayerByPosition(float x,float y){
+        int size= layers.size();
+        // scan the layers decreasingly
+        for(int i=size-1;i>=0;i--){
+            if(layers.get(i).isInner(x,y)){
+                return layers.get(i);
+            }
+        }
+        return null;
+    }
+
     public void saveFileWithLayers() throws IOException {
         if(fileName==null){
             // ask for fileName
