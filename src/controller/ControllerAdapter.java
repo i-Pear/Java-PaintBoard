@@ -25,6 +25,8 @@ public class ControllerAdapter implements Initializable {
     public TabPane _tabPane;
     public static ControllerAdapter instance;
 
+    enum Input_status{SELECT,PEN,LINE,RECTANGLE,CIRCLE,ELLIPSE,TEXT};
+
     @FXML
     Button buttonSelect,buttonFreePen,buttonLine,buttonRectangle,buttonCircle,buttonEllipse,buttonText;
 
@@ -67,7 +69,7 @@ public class ControllerAdapter implements Initializable {
         LayersControl.getInstance().getLayerGroup().saveFileWithLayers();
     }
 
-    // --- toolbox buttons ---
+    // --- toolbox buttons callbacks ---
 
     public void buttonSelectClicked(){
 

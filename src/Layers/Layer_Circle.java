@@ -14,6 +14,13 @@ public class Layer_Circle extends Layer{
         rightBottom=new Point2D(x1,y1);
     }
 
+    public Layer_Circle(PointGroup pointGroup){
+        layerType=LayerType.CIRCLE;
+
+        leftUpper=pointGroup.p0;
+        rightBottom=pointGroup.p1;
+    }
+
     @Override
     public void draw(GraphicsContext graphics) {
         graphics.setFill(color.getColor());
