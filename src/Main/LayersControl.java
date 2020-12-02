@@ -36,6 +36,10 @@ public class LayersControl {
         return canvas.get(activeID);
     }
 
+    public void repaint(){
+        getInstance().getLayerGroup().draw(getInstance().getActiveGraphics().getGraphicsContext2D());
+    }
+
     public LayerGroup getLayerGroup(){
         return layerGroups.get(activeID);
     }

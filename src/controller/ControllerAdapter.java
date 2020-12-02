@@ -25,7 +25,8 @@ public class ControllerAdapter implements Initializable {
     public TabPane _tabPane;
     public static ControllerAdapter instance;
 
-    enum Input_status{SELECT,PEN,LINE,RECTANGLE,CIRCLE,ELLIPSE,TEXT};
+    public enum Input_status{SELECT,PEN,LINE,RECTANGLE,CIRCLE,ELLIPSE,TEXT}
+    public static Input_status input_status;
 
     @FXML
     Button buttonSelect,buttonFreePen,buttonLine,buttonRectangle,buttonCircle,buttonEllipse,buttonText;
@@ -72,31 +73,31 @@ public class ControllerAdapter implements Initializable {
     // --- toolbox buttons callbacks ---
 
     public void buttonSelectClicked(){
-
+        input_status=Input_status.SELECT;
     }
 
     public void buttonFreePenClicked(){
-
+        input_status=Input_status.PEN;
     }
 
     public void buttonLineClicked(){
-
+        input_status=Input_status.LINE;
     }
 
     public void buttonRectangleClicked(){
-
+        input_status=Input_status.RECTANGLE;
     }
 
     public void buttonCircleClicked(){
-
+        input_status=Input_status.CIRCLE;
     }
 
     public void buttonEllipseClicked(){
-
+        input_status=Input_status.ELLIPSE;
     }
 
     public void buttonTextClicked(){
-
+        input_status=Input_status.TEXT;
     }
 
 }

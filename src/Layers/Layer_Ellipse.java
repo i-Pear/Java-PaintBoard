@@ -3,18 +3,18 @@ package Layers;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class Layer_Oval extends Layer{
+public class Layer_Ellipse extends Layer{
 
     Point2D leftUpper,rightBottom;
 
-    Layer_Oval(int x0,int y0,int x1,int y1){
+    Layer_Ellipse(int x0, int y0, int x1, int y1){
         layerType=LayerType.OVAL;
 
         leftUpper=new Point2D(x0,y0);
         rightBottom=new Point2D(x1,y1);
     }
 
-    public Layer_Oval(PointGroup pointGroup){
+    public Layer_Ellipse(PointGroup pointGroup){
         layerType=LayerType.RECTANGLE;
 
         leftUpper=pointGroup.p0;
