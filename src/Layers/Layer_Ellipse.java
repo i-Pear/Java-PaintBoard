@@ -3,6 +3,7 @@ package Layers;
 import com.sun.javafx.geom.Ellipse2D;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Layer_Ellipse extends Layer{
 
@@ -25,11 +26,12 @@ public class Layer_Ellipse extends Layer{
     @Override
     public void draw(GraphicsContext graphics) {
         graphics.setLineWidth(width);
-        graphics.setFill(color.getColor());
+        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
         switch (fillType){
             case NO:
                 graphics.strokeOval(leftUpper.getX()+x_shifting,leftUpper.getY()+y_shifting,rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());
             case FILL:
+                graphics.strokeOval(leftUpper.getX()+x_shifting,leftUpper.getY()+y_shifting,rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());
                 graphics.fillOval(leftUpper.getX()+x_shifting,leftUpper.getY()+y_shifting,rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());
         }
     }

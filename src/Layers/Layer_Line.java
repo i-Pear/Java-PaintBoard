@@ -2,6 +2,7 @@ package Layers;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Layer_Line extends Layer {
 
@@ -24,7 +25,7 @@ public class Layer_Line extends Layer {
     @Override
     public void draw(GraphicsContext graphics) {
         graphics.setLineWidth(width);
-        graphics.setFill(color.getColor());
+        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
         graphics.strokeLine(start.getX(), start.getY(), end.getX(), end.getY());
     }
 

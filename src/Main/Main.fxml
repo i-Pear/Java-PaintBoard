@@ -51,6 +51,7 @@
                   <Button fx:id="buttonCircle" mnemonicParsing="false" onAction="#buttonCircleClicked" />
                   <Button fx:id="buttonEllipse" mnemonicParsing="false" onAction="#buttonEllipseClicked" />
                   <Button fx:id="buttonText" mnemonicParsing="false" onAction="#buttonTextClicked" />
+                  <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" />
                </items>
             </ToolBar>
          </left>

@@ -1,6 +1,7 @@
 package Layers;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class Layer_Curve extends Layer{
     @Override
     public void draw(GraphicsContext graphics) {
         graphics.setLineWidth(width);
-        graphics.setFill(color.getColor());
+        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
         int len= lines.size();
         for(int i=0;i<len-1;i++){
             Layer_Line line=lines.get(i);

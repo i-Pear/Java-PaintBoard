@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +32,9 @@ public class ControllerAdapter implements Initializable {
     @FXML
     Button buttonSelect,buttonFreePen,buttonLine,buttonRectangle,buttonCircle,buttonEllipse,buttonText;
 
+    @FXML
+    ToggleButton buttonFill;
+
     public ControllerAdapter() throws IOException {
         instance=this;
     }
@@ -51,6 +55,12 @@ public class ControllerAdapter implements Initializable {
         setButtonIcon(buttonCircle,"resources/Big/circle.png");
         setButtonIcon(buttonEllipse,"resources/Big/ellipse.png");
         setButtonIcon(buttonText,"resources/Big/text.png");
+        {
+            ImageView imageView=new ImageView("resources/Big/fill.png");
+            imageView.setFitWidth(20);
+            imageView.setFitHeight(20);
+            buttonFill.setGraphic(imageView);
+        }
     }
 
     public static ControllerAdapter getInstance(){
@@ -71,6 +81,11 @@ public class ControllerAdapter implements Initializable {
     }
 
     // --- toolbox buttons callbacks ---
+
+    static boolean doFill=false;
+    public void toggleFill(){
+        doFill=!doFill;
+    }
 
     public void buttonSelectClicked(){
         input_status=Input_status.SELECT;
