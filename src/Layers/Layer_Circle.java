@@ -1,14 +1,8 @@
 package Layers;
 
 import com.sun.javafx.geom.Ellipse2D;
-import javafx.geometry.Point2D;
+import Layers.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeType;
-
-import javax.swing.border.StrokeBorder;
-import java.awt.*;
 
 public class Layer_Circle extends Layer {
 
@@ -17,21 +11,22 @@ public class Layer_Circle extends Layer {
     Layer_Circle(int x0, int y0, int x1, int y1) {
         layerType = LayerType.CIRCLE;
 
-        leftUpper = new Point2D(x0, y0);
-        rightBottom = new Point2D(x1, y1);
+        int d=Math.min(x1-x0,y1-y0);
+        leftUpper = new Point2D(x0, x0+d);
+        rightBottom = new Point2D(x1, y1+d);
     }
 
     public Layer_Circle(PointGroup pointGroup) {
         layerType = LayerType.CIRCLE;
 
-        leftUpper = pointGroup.p0;
-        rightBottom = pointGroup.p1;
+        int d= (int) Math.min(pointGroup.p1.getX()-pointGroup.p0.getX(),pointGroup.p1.getY()-pointGroup.p0.getY());
+        leftUpper = new Point2D(pointGroup.p0.getX(),pointGroup.p0.getY());
+        rightBottom = new Point2D(pointGroup.p0.getX()+d,pointGroup.p0.getY()+d);
     }
 
     @Override
     public void draw(GraphicsContext graphics) {
-        graphics.setLineWidth(width);
-        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
+        setGraphicsMode(graphics);
         switch (fillType) {
             case NO:
                 graphics.strokeOval(leftUpper.getX() + x_shifting, leftUpper.getY() + y_shifting, rightBottom.getX() - leftUpper.getX(), rightBottom.getY() - leftUpper.getY());

@@ -1,7 +1,6 @@
 package Layers;
 
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -9,14 +8,19 @@ public class Layer_Curve extends Layer{
 
     ArrayList<Layer_Line> lines;
 
-    public Layer_Curve(ArrayList<Layer_Line> point2DArray){
+    public Layer_Curve(ArrayList<Layer_Line> point2DArray,ColorInfo color,LineType lineType,float lineWidth){
+        layerType=LayerType.CURVE;
+
         lines =point2DArray;
+        for(Layer_Line line:lines){
+            line.color=color;
+            line.lineType=lineType;
+            line.width=lineWidth;
+        }
     }
 
     @Override
     public void draw(GraphicsContext graphics) {
-        graphics.setLineWidth(width);
-        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
         int len= lines.size();
         for(int i=0;i<len-1;i++){
             Layer_Line line=lines.get(i);
@@ -28,6 +32,9 @@ public class Layer_Curve extends Layer{
 
     @Override
     public boolean isInner(float x, float y) {
+        for(Layer_Line line:lines){
+            if(line.isInner(x,y))return true;
+        }
         return false;
     }
 

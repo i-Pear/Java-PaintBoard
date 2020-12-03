@@ -1,10 +1,8 @@
 package Layers;
 
-import com.sun.javafx.geom.Ellipse2D;
-import javafx.geometry.Point2D;
+import Layers.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class Layer_Rectangle extends Layer{
 
@@ -26,8 +24,7 @@ public class Layer_Rectangle extends Layer{
 
     @Override
     public void draw(GraphicsContext graphics) {
-        graphics.setLineWidth(width);
-        graphics.setFill(fillType==FillType.FILL?color.getColor(): Color.TRANSPARENT);
+        setGraphicsMode(graphics);
         switch (fillType){
             case NO:
                 graphics.strokeRect(leftUpper.getX()+x_shifting,leftUpper.getY()+y_shifting,rightBottom.getX()-leftUpper.getX(),rightBottom.getY()-leftUpper.getY());

@@ -2,7 +2,9 @@ package Layers;
 
 import javafx.scene.paint.Color;
 
-public class ColorInfo {
+import java.io.Serializable;
+
+public class ColorInfo implements Serializable {
 
     double R, G, B;
 

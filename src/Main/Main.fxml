@@ -3,17 +3,19 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerAdapter">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerAdapter">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#newFile" text="New" />
-                  <MenuItem mnemonicParsing="false" text="Open" />
+              <MenuItem mnemonicParsing="false" onAction="#newFile" text="New File" />
+                  <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveFileAs" text="Save As" />
                   <MenuItem mnemonicParsing="false" text="Export" />
             </items>
           </Menu>
@@ -44,14 +46,27 @@
          <left>
             <ToolBar orientation="VERTICAL" prefHeight="345.0" prefWidth="37.0" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="buttonSelect" mnemonicParsing="false" onAction="#buttonSelectClicked" />
-                  <Button fx:id="buttonFreePen" mnemonicParsing="false" onAction="#buttonFreePenClicked" prefHeight="25.0" prefWidth="2.0" />
-                  <Button fx:id="buttonLine" mnemonicParsing="false" onAction="#buttonLineClicked" />
-                  <Button fx:id="buttonRectangle" mnemonicParsing="false" onAction="#buttonRectangleClicked" />
-                  <Button fx:id="buttonCircle" mnemonicParsing="false" onAction="#buttonCircleClicked" />
-                  <Button fx:id="buttonEllipse" mnemonicParsing="false" onAction="#buttonEllipseClicked" />
-                  <Button fx:id="buttonText" mnemonicParsing="false" onAction="#buttonTextClicked" />
-                  <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" />
+                  <Label prefHeight="17.0" prefWidth="80.0" text="       Tools" textAlignment="CENTER" />
+                  <Button fx:id="buttonSelect" mnemonicParsing="false" onAction="#buttonSelectClicked" prefWidth="80.0" text="Select" />
+                  <Button fx:id="buttonFreePen" mnemonicParsing="false" onAction="#buttonFreePenClicked" prefWidth="80.0" text="Pen" />
+                  <Button fx:id="buttonLine" mnemonicParsing="false" onAction="#buttonLineClicked" prefWidth="80.0" text="Line" />
+                  <Button fx:id="buttonRectangle" mnemonicParsing="false" onAction="#buttonRectangleClicked" prefWidth="80.0" text="Rect" />
+                  <Button fx:id="buttonCircle" mnemonicParsing="false" onAction="#buttonCircleClicked" prefWidth="80.0" text="Circle" />
+                  <Button fx:id="buttonEllipse" mnemonicParsing="false" onAction="#buttonEllipseClicked" prefWidth="80.0" text="Ellipse" />
+                  <Button fx:id="buttonText" mnemonicParsing="false" onAction="#buttonTextClicked" prefWidth="80.0" text="Text" />
+                  <Button fx:id="buttonClear" mnemonicParsing="false" onAction="#buttonClearClicked" prefWidth="80.0" text="Clear" />
+                  <Label prefHeight="17.0" prefWidth="80.0" text="         Fill" />
+                  <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" prefWidth="80.0" text="Fill Off" />
+                  <Label prefHeight="17.0" prefWidth="80.0" text="       Color" textAlignment="CENTER" />
+                  <ColorPicker fx:id="colorPicker" onAction="#chooseColor" prefHeight="30.0" prefWidth="80.0">
+                     <value>
+                        <Color />
+                     </value></ColorPicker>
+                  <Label prefHeight="17.0" prefWidth="80.0" text="     Line Type" textAlignment="CENTER" />
+                  <ChoiceBox fx:id="lineChoiceBox" prefHeight="30.0" prefWidth="80.0" />
+                  <Label prefHeight="17.0" prefWidth="80.0" text="    Line Width" />
+                  <Slider fx:id="lineWidthSlider" max="10.0" min="1.0" prefHeight="14.0" prefWidth="80.0" value="5.0" />
+                  
                </items>
             </ToolBar>
          </left>
@@ -63,7 +78,7 @@
       <Pane prefHeight="30.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
             <Separator layoutY="3.0" prefHeight="0.0" prefWidth="600.0" />
-            <Label alignment="BOTTOM_LEFT" layoutY="5.0" prefHeight="22.0" prefWidth="111.0" text="Label">
+            <Label fx:id="labelStatus" alignment="BOTTOM_LEFT" layoutY="5.0" prefHeight="22.0" prefWidth="111.0" text="Ready">
                <padding>
                   <Insets left="10.0" top="2.0" />
                </padding>

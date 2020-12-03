@@ -2,7 +2,7 @@ package controller;
 
 import Layers.*;
 import Main.LayersControl;
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -32,20 +32,16 @@ public class CanvasController {
     }
 
     private Layer getCurrentDrawingLayer(MouseEvent e){
-        switch (ControllerAdapter.input_status){
-            case LINE:
-                return LayerFactory.createShapeLayer(ControllerAdapter.input_status,new PointGroup(x_start,y_start,e.getX(),e.getY()));
-            case PEN:
-            case TEXT:
-            case SELECT:
-                // will never call here
-                return null;
-            default:
-                return LayerFactory.createShapeLayer(ControllerAdapter.input_status,getPointGroup(e));
-        }
+        // will never call here
+        return switch (ControllerAdapter.input_status) {
+            case LINE -> LayerFactory.createShapeLayer(ControllerAdapter.input_status, new PointGroup(x_start, y_start, e.getX(), e.getY()));
+            case PEN, TEXT, SELECT -> null;
+            default -> LayerFactory.createShapeLayer(ControllerAdapter.input_status, getPointGroup(e));
+        };
     }
 
     ArrayList<Layer_Line> current_free_path;
+    public static Color color=Color.BLACK;
 
     public void mouseDown(MouseEvent e){
         // System.out.println("down");
@@ -87,9 +83,11 @@ public class CanvasController {
         LayersControl.getInstance().repaint();
     }
 
-    public void mouseMove(MouseEvent e){
+    public void mouseDrag(MouseEvent e){
         // System.out.println("move");
-        if(!isPressed)return;
+        if(!isPressed){
+            return;
+        }
 
         // get graphics content
         GraphicsContext graphics=LayersControl.getInstance().getActiveGraphics().getGraphicsContext2D();
@@ -106,6 +104,9 @@ public class CanvasController {
             Layer_Line line=new Layer_Line(
                     new PointGroup(x_start,y_start,e.getX(),e.getY())
             );
+            line.lineType=ControllerAdapter.getInstance().getLineType();
+            line.width=ControllerAdapter.getInstance().getLineWidth();
+            line.color=new ColorInfo(color);
             x_start=e.getX();
             y_start=e.getY();
             line.draw(graphics);
@@ -119,6 +120,19 @@ public class CanvasController {
         Layer temp=getCurrentDrawingLayer(e);
         if(temp!=null)temp.fillType=ControllerAdapter.doFill? Layer.FillType.FILL: Layer.FillType.NO;
         if(temp!=null)temp.draw(graphics);
+    }
+
+    public void mouseMove(MouseEvent e){
+        if(isPressed)return;
+        if(ControllerAdapter.input_status!= ControllerAdapter.Input_status.SELECT){
+            ControllerAdapter.getInstance()._tabPane.setCursor(Cursor.DEFAULT);
+            return;
+        }
+        if(LayersControl.getInstance().getLayerGroup().getLayerByPosition((float)e.getX(),(float)e.getY())!=null){
+            ControllerAdapter.getInstance()._tabPane.setCursor(Cursor.MOVE);
+        }else{
+            ControllerAdapter.getInstance()._tabPane.setCursor(Cursor.DEFAULT);
+        }
     }
 
 }

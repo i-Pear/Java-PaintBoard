@@ -1,33 +1,48 @@
 package Layers;
 
+import Main.LayersControl;
+import controller.CanvasController;
 import controller.ControllerAdapter;
-import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
 public class LayerFactory {
 
-    public static Layer createShapeLayer(ControllerAdapter.Input_status status,PointGroup points){
-        switch (status){
+    public static Layer createShapeLayer(ControllerAdapter.Input_status status, PointGroup points) {
+        Layer layer;
+        switch (status) {
             case LINE:
-                return new Layer_Line(points);
+                layer = new Layer_Line(points);
+                break;
             case CIRCLE:
-                return new Layer_Circle(points);
+                layer = new Layer_Circle(points);
+                break;
             case RECTANGLE:
-                return new Layer_Rectangle(points);
+                layer = new Layer_Rectangle(points);
+                break;
             case ELLIPSE:
-                return new Layer_Ellipse(points);
+                layer = new Layer_Ellipse(points);
+                break;
             default:
                 return null;
         }
+        layer.color = new ColorInfo(CanvasController.color);
+        layer.lineType = ControllerAdapter.getInstance().getLineType();
+        layer.width = ControllerAdapter.getInstance().getLineWidth();
+        return layer;
     }
 
-    public static Layer createCurveLayer(ArrayList<Layer_Line> point2DS){
-        return new Layer_Curve(point2DS);
+    public static Layer createCurveLayer(ArrayList<Layer_Line> point2DS) {
+        return new Layer_Curve(
+                point2DS,
+                new ColorInfo(CanvasController.color),
+                ControllerAdapter.getInstance().getLineType(),
+                ControllerAdapter.getInstance().getLineWidth()
+        );
     }
 
-    public static Layer createBitmapLayer(Image image){
+    public static Layer createBitmapLayer(Image image) {
         return new Layer_Bitmap(image);
     }
 

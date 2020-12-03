@@ -1,6 +1,6 @@
 package Layers;
 
-import javafx.geometry.Point2D;
+import Layers.Point2D;
 
 public class PointGroup {
 
