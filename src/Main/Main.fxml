@@ -16,7 +16,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#openFile" text="Open" />
                   <MenuItem mnemonicParsing="false" onAction="#saveFile" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#saveFileAs" text="Save As" />
-                  <MenuItem mnemonicParsing="false" text="Export" />
+                  <MenuItem mnemonicParsing="false" onAction="#export" text="Export" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -41,7 +41,7 @@
    <center>
        <BorderPane>
          <center>
-             <TabPane fx:id="_tabPane" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER" />
+             <TabPane fx:id="_tabPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </center>
          <left>
             <ToolBar orientation="VERTICAL" prefHeight="345.0" prefWidth="37.0" BorderPane.alignment="CENTER">
@@ -55,17 +55,25 @@
                   <Button fx:id="buttonEllipse" mnemonicParsing="false" onAction="#buttonEllipseClicked" prefWidth="80.0" text="Ellipse" />
                   <Button fx:id="buttonText" mnemonicParsing="false" onAction="#buttonTextClicked" prefWidth="80.0" text="Text" />
                   <Button fx:id="buttonClear" mnemonicParsing="false" onAction="#buttonClearClicked" prefWidth="80.0" text="Clear" />
+                  <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="         Fill" />
                   <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" prefWidth="80.0" text="Fill Off" />
+                  <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="       Color" textAlignment="CENTER" />
                   <ColorPicker fx:id="colorPicker" onAction="#chooseColor" prefHeight="30.0" prefWidth="80.0">
                      <value>
                         <Color />
                      </value></ColorPicker>
+                  <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="     Line Type" textAlignment="CENTER" />
                   <ChoiceBox fx:id="lineChoiceBox" prefHeight="30.0" prefWidth="80.0" />
+                  <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="    Line Width" />
                   <Slider fx:id="lineWidthSlider" max="10.0" min="1.0" prefHeight="14.0" prefWidth="80.0" value="5.0" />
+                  <Separator prefWidth="80.0" />
+                  <Label text="         Edit" />
+                  <Button fx:id="buttonUndo" disable="true" mnemonicParsing="false" onAction="#undoButtonClicked" prefHeight="25.0" prefWidth="80.0" text="Undo" />
+                  <Button fx:id="buttonRedo" disable="true" mnemonicParsing="false" onAction="#redoButtonClicked" prefHeight="25.0" prefWidth="80.0" text="Redo" />
                   
                </items>
             </ToolBar>

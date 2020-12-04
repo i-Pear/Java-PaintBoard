@@ -1,5 +1,6 @@
 package Layers;
 
+import Main.LayersControl;
 import Main.MainFrame;
 import controller.ControllerAdapter;
 import javafx.scene.canvas.GraphicsContext;
@@ -9,13 +10,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LayerGroup implements Serializable {
+public class LayerGroup implements Serializable,Cloneable {
 
-    ArrayList<Layer> layers;
+    ArrayList<Layer> layers= new ArrayList<>();
     String fileName = "New File";
 
-    public LayerGroup() {
-        layers = new ArrayList<>();
+    String modifyDescription="New File";
+
+    public LayerGroup getClone() {
+        LayerGroup clone=new LayerGroup();
+        clone.layers=new ArrayList<>(layers);
+        clone.fileName=fileName;
+        clone.modifyDescription=modifyDescription;
+        return clone;
     }
 
     public void appendLayer(Layer layer) {
@@ -66,6 +73,7 @@ public class LayerGroup implements Serializable {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
+        LayersControl.getInstance().getLayerHistory().saved=true;
     }
 
     /**
@@ -86,6 +94,7 @@ public class LayerGroup implements Serializable {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
+        LayersControl.getInstance().getLayerHistory().saved=true;
     }
 
     public void clear() {

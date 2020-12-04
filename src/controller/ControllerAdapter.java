@@ -3,13 +3,16 @@ package controller;
 import Layers.Layer;
 import Layers.LayerGroup;
 import Main.MainFrame;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import Main.LayersControl;
+import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +29,7 @@ public class ControllerAdapter implements Initializable {
     public static Input_status input_status = Input_status.SELECT;
 
     @FXML
-    Button buttonSelect, buttonFreePen, buttonLine, buttonRectangle, buttonCircle, buttonEllipse, buttonText, buttonClear;
+    public Button buttonSelect, buttonFreePen, buttonLine, buttonRectangle, buttonCircle, buttonEllipse, buttonText, buttonClear,buttonUndo,buttonRedo;
 
     @FXML
     Label labelStatus;
@@ -87,6 +90,25 @@ public class ControllerAdapter implements Initializable {
         LayersControl.getInstance().tabChange();
     }
 
+    public void export(){
+        // ask for fileName
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export as...");
+        fileChooser.setInitialFileName("New File.png");
+        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("PNG File", "*.png");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+        File file = fileChooser.showSaveDialog(MainFrame.mainStage);
+        if(file==null)return;
+
+        WritableImage image=LayersControl.getInstance().getSnapshot();
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        }
+        catch (Exception ignored) {}
+    }
+
     public void saveFile() throws IOException {
         LayersControl.getInstance().getLayerGroup().saveFile();
     }
@@ -110,6 +132,11 @@ public class ControllerAdapter implements Initializable {
         tabPane = _tabPane;
         LayersControl.getInstance().createNewLayer(layerGroup);
         LayersControl.getInstance().repaint();
+    }
+
+    public void refreshHistoryButton(){
+        buttonUndo.setDisable(!LayersControl.getInstance().getLayerHistory().canUndo());
+        buttonRedo.setDisable(!LayersControl.getInstance().getLayerHistory().canRedo());
     }
 
     // --- toolbox buttons callbacks ---
@@ -174,9 +201,22 @@ public class ControllerAdapter implements Initializable {
     }
 
     public void buttonClearClicked() {
+        LayersControl.getInstance().getLayerHistory().forward("Clear");
         LayersControl.getInstance().getLayerGroup().clear();
         LayersControl.getInstance().repaint();
         labelStatus.setText("Cleared");
+    }
+
+    public void undoButtonClicked(){
+        LayersControl.getInstance().getLayerHistory().undo();
+        LayersControl.getInstance().repaint();
+        refreshHistoryButton();
+    }
+
+    public void redoButtonClicked(){
+        LayersControl.getInstance().getLayerHistory().redo();
+        LayersControl.getInstance().repaint();
+        refreshHistoryButton();
     }
 
 }

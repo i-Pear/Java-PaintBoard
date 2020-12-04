@@ -47,10 +47,11 @@ public class CanvasController {
         // System.out.println("down");
         if(ControllerAdapter.input_status== ControllerAdapter.Input_status.SELECT){
             selectedLayer=LayersControl.getInstance().getLayerGroup().getLayerByPosition((float)e.getX(),(float)e.getY());
-            System.out.println("selected");
+            // System.out.println("selected");
         }else{
             selectedLayer=null;
         }
+        // create an empty path vector
         if(ControllerAdapter.input_status== ControllerAdapter.Input_status.PEN){
             current_free_path=new ArrayList<>();
         }
@@ -65,22 +66,29 @@ public class CanvasController {
 
         // if it is creating new shape
         {
+            LayersControl.getInstance().getLayerHistory().forward("Create Shape");
             Layer layer= getCurrentDrawingLayer(e);
             if(layer!=null)layer.fillType=ControllerAdapter.doFill? Layer.FillType.FILL: Layer.FillType.NO;
             if(layer!=null)LayersControl.getInstance().getLayerGroup().appendLayer(layer);
         }
 
         // if it is moving shape
-        if(selectedLayer!=null)selectedLayer.applyShifting();
+        if(selectedLayer!=null){
+            LayersControl.getInstance().getLayerHistory().forward("Move Shape");
+            selectedLayer.applyShifting();
+        }
 
         // if it is drawing free line
         if(ControllerAdapter.input_status== ControllerAdapter.Input_status.PEN){
+            LayersControl.getInstance().getLayerHistory().forward("Create Free Line");
             Layer layer=LayerFactory.createCurveLayer(current_free_path);
             LayersControl.getInstance().getLayerGroup().appendLayer(layer);
             current_free_path=null;
         }
 
         LayersControl.getInstance().repaint();
+
+        ControllerAdapter.getInstance().refreshHistoryButton();
     }
 
     public void mouseDrag(MouseEvent e){
@@ -90,7 +98,7 @@ public class CanvasController {
         }
 
         // get graphics content
-        GraphicsContext graphics=LayersControl.getInstance().getActiveGraphics().getGraphicsContext2D();
+        GraphicsContext graphics=LayersControl.getInstance().getActiveCanvas().getGraphicsContext2D();
 
         // deal with "Select" tool
         if(ControllerAdapter.input_status== ControllerAdapter.Input_status.SELECT){
@@ -116,6 +124,16 @@ public class CanvasController {
 
         // draw
         LayersControl.getInstance().repaint();
+
+        // specially deal with text tool
+        if(ControllerAdapter.input_status== ControllerAdapter.Input_status.TEXT) {
+            Layer bound=LayerFactory.createShapeLayer(ControllerAdapter.input_status, getPointGroup(e));
+            bound.fillType= Layer.FillType.NO;
+            bound.width=3;
+            bound.lineType= Layer.LineType.FULL;
+            bound.draw(graphics);
+            return;
+        }
 
         Layer temp=getCurrentDrawingLayer(e);
         if(temp!=null)temp.fillType=ControllerAdapter.doFill? Layer.FillType.FILL: Layer.FillType.NO;

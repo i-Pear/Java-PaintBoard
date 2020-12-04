@@ -9,9 +9,7 @@ import java.io.Serializable;
 public abstract class Layer implements Serializable {
 
     public enum LayerType{LINE,OVAL,RECTANGLE,CIRCLE,TEXT,BITMAP, CURVE}
-
     public enum FillType{NO,FILL}
-
     public enum LineType {FULL,POINT,DASH}
     static double[] dash_array_no =null;
     static double[] dash_array_point ={0,40};
@@ -50,4 +48,8 @@ public abstract class Layer implements Serializable {
 
     public abstract void applyShifting();
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
