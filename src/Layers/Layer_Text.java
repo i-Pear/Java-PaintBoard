@@ -1,6 +1,6 @@
 package Layers;
 
-import controller.CanvasController;
+import Controller.CanvasController;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 

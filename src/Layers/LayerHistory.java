@@ -1,6 +1,6 @@
 package Layers;
 
-import controller.ControllerAdapter;
+import Controller.ControllerAdapter;
 import javafx.collections.FXCollections;
 import javafx.scene.canvas.GraphicsContext;
 

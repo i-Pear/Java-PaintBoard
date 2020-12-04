@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import Layers.Layer;
 import Layers.LayerFactory;
@@ -86,16 +86,16 @@ public class ControllerAdapter implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setButtonIcon(buttonSelect, "resources/select.png");
-        setButtonIcon(buttonFreePen, "resources/pen.png");
-        setButtonIcon(buttonLine, "resources/line.png");
-        setButtonIcon(buttonRectangle, "resources/rectangle.png");
-        setButtonIcon(buttonCircle, "resources/circle.png");
-        setButtonIcon(buttonEllipse, "resources/ellipse.png");
-        setButtonIcon(buttonText, "resources/text.png");
-        setButtonIcon(buttonClear, "resources/clear.png");
+        setButtonIcon(buttonSelect, "Resources/select.png");
+        setButtonIcon(buttonFreePen, "Resources/pen.png");
+        setButtonIcon(buttonLine, "Resources/line.png");
+        setButtonIcon(buttonRectangle, "Resources/rectangle.png");
+        setButtonIcon(buttonCircle, "Resources/circle.png");
+        setButtonIcon(buttonEllipse, "Resources/ellipse.png");
+        setButtonIcon(buttonText, "Resources/text.png");
+        setButtonIcon(buttonClear, "Resources/clear.png");
         {
-            ImageView imageView = new ImageView("resources/fill.png");
+            ImageView imageView = new ImageView("Resources/fill.png");
             imageView.setFitWidth(22);
             imageView.setFitHeight(22);
             buttonFill.setGraphic(imageView);

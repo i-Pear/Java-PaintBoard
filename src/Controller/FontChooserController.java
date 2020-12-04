@@ -1,4 +1,4 @@
-package controller;
+package Controller;
 
 import Layers.FontInfo;
 import Main.FontChooserFrame;

@@ -1,8 +1,8 @@
 package Layers;
 
-import controller.CanvasController;
-import controller.ControllerAdapter;
-import controller.FontChooserController;
+import Controller.CanvasController;
+import Controller.ControllerAdapter;
+import Controller.FontChooserController;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;

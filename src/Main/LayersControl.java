@@ -1,9 +1,9 @@
 package Main;
 
+import Controller.CanvasController;
+import Controller.ControllerAdapter;
 import Layers.LayerGroup;
 import Layers.LayerHistory;
-import controller.CanvasController;
-import controller.ControllerAdapter;
 import javafx.event.Event;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.*;
