@@ -4,6 +4,9 @@ import controller.CanvasController;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Implement for text layer
+ */
 public class Layer_Text extends Layer {
 
     String text;

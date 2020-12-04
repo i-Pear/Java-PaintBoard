@@ -7,6 +7,9 @@ import javafx.scene.canvas.GraphicsContext;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * pack a group of LayerGroups for undo and redo
+ */
 public class LayerHistory {
 
     ArrayList<LayerGroup> undoHistory=new ArrayList<>();
@@ -24,6 +27,10 @@ public class LayerHistory {
         current=layerGroup;
     }
 
+    /**
+     * save current status and mark new action descriptions
+     * @param description action description
+     */
     public void forward(String description){
         undoHistory.add(current.getClone());
         current.modifyDescription=description;
@@ -56,6 +63,9 @@ public class LayerHistory {
         updateHistoryList();
     }
 
+    /**
+     * update the history list on right the side of window
+     */
     public void updateHistoryList(){
         ArrayList<String> arrayList=new ArrayList<>();
         for(LayerGroup layerGroup:undoHistory){

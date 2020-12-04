@@ -23,6 +23,10 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Event receiver for main-frame controls: tool buttons / menu items
+ * Also stores status information
+ */
 public class ControllerAdapter implements Initializable {
 
     public static TabPane tabPane;
@@ -54,13 +58,24 @@ public class ControllerAdapter implements Initializable {
     @FXML
     public ListView<String> historyList;
 
+    static boolean doFill = false;
+
+    /**
+     * bind instance to static variable, for visiting in the future
+     */
     public ControllerAdapter() {
         instance = this;
     }
 
-    public void tabChange() {
-        LayersControl.getInstance().tabChange();
+    public static ControllerAdapter getInstance() {
+        return instance;
     }
+
+    /**
+     * Helper functions and initializations
+     * @param button button to set icon
+     * @param path icon path
+     */
 
     void setButtonIcon(Button button, String path) {
         ImageView imageView = new ImageView(path);
@@ -89,22 +104,9 @@ public class ControllerAdapter implements Initializable {
         lineChoiceBox.setValue("Solid Line");
     }
 
-    public static ControllerAdapter getInstance() {
-        return instance;
-    }
-
     public void refreshHistoryButton(){
         buttonUndo.setDisable(!LayersControl.getInstance().getLayerHistory().canUndo());
         buttonRedo.setDisable(!LayersControl.getInstance().getLayerHistory().canRedo());
-    }
-
-    // --- toolbox buttons callbacks ---
-
-    static boolean doFill = false;
-
-    public void toggleFill() {
-        doFill = !doFill;
-        buttonFill.setText(doFill ? "Fill On" : "Fill Off");
     }
 
     public Layer.LineType getLineType() {
@@ -120,8 +122,21 @@ public class ControllerAdapter implements Initializable {
         return (float) lineWidthSlider.getValue();
     }
 
+    /**
+     * Following are callbacks for buttons on left
+     */
+
+    public void tabChange() {
+        LayersControl.getInstance().tabChange();
+    }
+
     public void chooseColor() {
         CanvasController.color = colorPicker.getValue();
+    }
+
+    public void toggleFill() {
+        doFill = !doFill;
+        buttonFill.setText(doFill ? "Fill On" : "Fill Off");
     }
 
     public void buttonSelectClicked() {
@@ -155,16 +170,15 @@ public class ControllerAdapter implements Initializable {
     }
 
     public void buttonTextClicked() {
-        input_status = Input_status.TEXT;
         labelStatus.setText("Text Tool");
 
         if(LayersControl.getInstance().tabs.isEmpty())return;
-
+        // create text input dialog
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Text Tool");
         dialog.setHeaderText("Text Tool - Add Text");
         dialog.setContentText("Please enter your text:");
-
+        // append text to board
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(s -> {
             LayersControl.getInstance().getLayerHistory().forward("Add text");
@@ -201,7 +215,7 @@ public class ControllerAdapter implements Initializable {
     }
 
     /**
-     *
+     * Following are callbacks for menu item on top
      */
 
     public void showAbout() throws IOException {

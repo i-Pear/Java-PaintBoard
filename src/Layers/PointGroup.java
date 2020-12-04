@@ -1,7 +1,8 @@
 package Layers;
 
-import Layers.Point2D;
-
+/**
+ * A pack of two points, for decreasing the count of arguments
+ */
 public class PointGroup {
 
     public Point2D p0,p1;

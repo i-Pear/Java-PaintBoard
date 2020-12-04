@@ -2,6 +2,9 @@ package Layers;
 
 import java.io.Serializable;
 
+/**
+ * A self-made point class, because the native Point2D class is not Serializable
+ */
 public class Point2D implements Serializable {
 
     private double x;

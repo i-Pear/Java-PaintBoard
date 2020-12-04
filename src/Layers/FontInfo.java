@@ -6,6 +6,9 @@ import javafx.scene.text.FontWeight;
 
 import java.io.Serializable;
 
+/**
+ * A self-made font class, because the native Font class is not Serializable
+ */
 public class FontInfo implements Serializable {
 
     public String fontName;

@@ -8,6 +8,9 @@ import javafx.stage.FileChooser;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * pack a group of layers which belong to same tab
+ */
 public class LayerGroup implements Serializable,Cloneable {
 
     public ArrayList<Layer> layers= new ArrayList<>();

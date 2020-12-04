@@ -3,6 +3,9 @@ package Layers;
 import com.sun.javafx.geom.Ellipse2D;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Implement for circle shape layer
+ */
 public class Layer_Circle extends Layer {
 
     Point2D leftUpper, rightBottom;

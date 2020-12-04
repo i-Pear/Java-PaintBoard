@@ -4,6 +4,10 @@ import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 
+/**
+ * Implement for free-drawn line layer
+ * contains segments of lines
+ */
 public class Layer_Curve extends Layer {
 
     ArrayList<Layer_Line> lines;

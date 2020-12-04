@@ -7,6 +7,9 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
+/**
+ * A implement of Simple Factory Pattern
+ */
 public class LayerFactory {
 
     public static Layer createShapeLayer(ControllerAdapter.Input_status status, PointGroup points) {
