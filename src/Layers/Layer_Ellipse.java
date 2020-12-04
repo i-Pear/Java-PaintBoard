@@ -1,15 +1,13 @@
 package Layers;
 
 import com.sun.javafx.geom.Ellipse2D;
-import Layers.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class Layer_Ellipse extends Layer{
 
     Point2D leftUpper,rightBottom;
 
-    Layer_Ellipse(int x0, int y0, int x1, int y1){
+    Layer_Ellipse(double x0, double y0, double x1, double y1){
         layerType=LayerType.OVAL;
 
         leftUpper=new Point2D(x0,y0);
@@ -53,6 +51,13 @@ public class Layer_Ellipse extends Layer{
         leftUpper=leftUpper.add(x_shifting,y_shifting);
         rightBottom=rightBottom.add(x_shifting,y_shifting);
         x_shifting=y_shifting=0;
+    }
+
+    @Override
+    public Layer getClone() {
+        Layer_Ellipse new_layer=new Layer_Ellipse(leftUpper.getX(), leftUpper.getY(), rightBottom.getX(), rightBottom.getY());
+        super.setClone(new_layer);
+        return new_layer;
     }
 
 }

@@ -1,10 +1,10 @@
 package Layers;
 
-import Main.MainFrame;
+import controller.ControllerAdapter;
+import javafx.collections.FXCollections;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.stage.FileChooser;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LayerHistory {
@@ -28,6 +28,8 @@ public class LayerHistory {
         undoHistory.add(current.getClone());
         current.modifyDescription=description;
         redoHistory.clear();
+
+        updateHistoryList();
     }
 
     public boolean canUndo(){
@@ -42,12 +44,29 @@ public class LayerHistory {
         redoHistory.add(0,current.getClone());
         current=undoHistory.get(undoHistory.size()-1);
         undoHistory.remove(undoHistory.size()-1);
+
+        updateHistoryList();
     }
 
     public void redo(){
         undoHistory.add(current.getClone());
         current=redoHistory.get(0);
         redoHistory.remove(0);
+
+        updateHistoryList();
+    }
+
+    public void updateHistoryList(){
+        ArrayList<String> arrayList=new ArrayList<>();
+        for(LayerGroup layerGroup:undoHistory){
+            arrayList.add(layerGroup.modifyDescription);
+        }
+        arrayList.add(current.modifyDescription);
+        arrayList.add("--------");
+        for(LayerGroup layerGroup:redoHistory){
+            arrayList.add(layerGroup.modifyDescription);
+        }
+        ControllerAdapter.getInstance().historyList.setItems(FXCollections.observableArrayList(arrayList));
     }
 
     /**

@@ -15,6 +15,11 @@ public class Point2D implements Serializable {
         return this.y;
     }
 
+    public Point2D(Point2D point2D){
+        this.x= point2D.getX();
+        this.y= point2D.getY();
+    }
+
     public Point2D(double x,double y) {
         this.x = x;
         this.y = y;

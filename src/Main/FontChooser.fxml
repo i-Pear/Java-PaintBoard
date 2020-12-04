@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<SplitPane dividerPositions="0.49665551839464883" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FontChooserController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="371.0">
+         <children>
+            <ListView fx:id="fontList" layoutX="7.0" layoutY="21.0" prefHeight="145.0" prefWidth="280.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="21.0" />
+            <ListView fx:id="weightList" layoutX="7.0" layoutY="177.0" prefHeight="181.0" prefWidth="135.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="196.0" />
+            <ListView fx:id="sizeList" layoutX="152.0" layoutY="196.0" prefHeight="181.0" prefWidth="135.0" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="196.0" />
+            <Label layoutX="7.0" layoutY="3.0" text="Font" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="3.0" />
+            <Label layoutX="8.0" layoutY="173.0" text="Weight" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="173.0" />
+            <Label layoutX="152.0" layoutY="173.0" text="Size" AnchorPane.leftAnchor="152.0" AnchorPane.topAnchor="173.0" />
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <TextArea fx:id="preview" layoutX="49.0" layoutY="71.0" prefHeight="200.0" prefWidth="200.0" text="abc123" AnchorPane.leftAnchor="49.0" AnchorPane.rightAnchor="49.0" AnchorPane.topAnchor="71.0" />
+            <Button layoutX="109.0" layoutY="346.0" mnemonicParsing="false" onAction="#confirm" prefHeight="25.0" prefWidth="81.0" text="Confirm" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="109.0" AnchorPane.rightAnchor="108.0" />
+            <Label layoutX="130.0" layoutY="47.0" text="Preview" />
+            <CheckBox fx:id="italicCheckBox" layoutX="126.0" layoutY="283.0" mnemonicParsing="false" onAction="#redisplayFont" text="Italic" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

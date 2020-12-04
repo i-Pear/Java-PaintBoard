@@ -1,18 +1,13 @@
 package Layers;
 
-import com.sun.javafx.geom.Line2D;
-import Layers.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
 
 public class Layer_Line extends Layer {
 
     Point2D start, end;
 
-    Layer_Line(int x0, int y0, int x1, int y1) {
+    Layer_Line(double x0, double y0, double x1, double y1) {
         layerType = LayerType.LINE;
 
         start = new Point2D(x0, y0);
@@ -40,7 +35,7 @@ public class Layer_Line extends Layer {
         double dx = end.getX() - start.getX();
         double dy = end.getY() - start.getY();
         double length = Math.sqrt(dx * dx + dy * dy);
-        double selectWidth=Math.max(width,10);
+        double selectWidth = Math.max(width, 10);
         double x_standard = dx / length * selectWidth / 2;
         double y_standard = dy / length * selectWidth / 2;
 
@@ -59,6 +54,13 @@ public class Layer_Line extends Layer {
         start = start.add(x_shifting, y_shifting);
         end = end.add(x_shifting, y_shifting);
         x_shifting = y_shifting = 0;
+    }
+
+    @Override
+    public Layer getClone() {
+        Layer_Line new_layer = new Layer_Line(start.getX(), start.getY(), end.getX(), end.getY());
+        super.setClone(new_layer);
+        return new_layer;
     }
 
 }

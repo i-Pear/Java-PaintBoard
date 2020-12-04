@@ -8,6 +8,12 @@ public class ColorInfo implements Serializable {
 
     double R, G, B;
 
+    public ColorInfo(ColorInfo colorInfo){
+        R=colorInfo.R;
+        G=colorInfo.G;
+        B=colorInfo.B;
+    }
+
     public ColorInfo(Color color){
         R=color.getRed();
         G=color.getGreen();

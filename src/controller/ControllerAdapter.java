@@ -1,21 +1,26 @@
 package controller;
 
 import Layers.Layer;
+import Layers.LayerFactory;
 import Layers.LayerGroup;
+import Main.FontChooserFrame;
+import Main.LayersControl;
 import Main.MainFrame;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import Main.LayersControl;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ControllerAdapter implements Initializable {
@@ -46,8 +51,15 @@ public class ControllerAdapter implements Initializable {
     @FXML
     public Slider lineWidthSlider;
 
-    public ControllerAdapter() throws IOException {
+    @FXML
+    public ListView<String> historyList;
+
+    public ControllerAdapter() {
         instance = this;
+    }
+
+    public void tabChange() {
+        LayersControl.getInstance().tabChange();
     }
 
     void setButtonIcon(Button button, String path) {
@@ -79,59 +91,6 @@ public class ControllerAdapter implements Initializable {
 
     public static ControllerAdapter getInstance() {
         return instance;
-    }
-
-    public void newFile() {
-        tabPane = _tabPane;
-        LayersControl.getInstance().createNewLayer();
-    }
-
-    public void tabChange() {
-        LayersControl.getInstance().tabChange();
-    }
-
-    public void export(){
-        // ask for fileName
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Export as...");
-        fileChooser.setInitialFileName("New File.png");
-        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("PNG File", "*.png");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setSelectedExtensionFilter(filter);
-        File file = fileChooser.showSaveDialog(MainFrame.mainStage);
-        if(file==null)return;
-
-        WritableImage image=LayersControl.getInstance().getSnapshot();
-
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-        }
-        catch (Exception ignored) {}
-    }
-
-    public void saveFile() throws IOException {
-        LayersControl.getInstance().getLayerGroup().saveFile();
-    }
-
-    public void saveFileAs() throws IOException {
-        LayersControl.getInstance().getLayerGroup().saveFileAs();
-    }
-
-    public void openFile() throws IOException, ClassNotFoundException {
-        // ask for fileName
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open File...");
-        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("JPaint File", "*.jpf");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setSelectedExtensionFilter(filter);
-        File file = fileChooser.showOpenDialog(MainFrame.mainStage);
-        if(file==null)return;
-        String filename = file.getAbsolutePath();
-
-        LayerGroup layerGroup=LayerGroup.readFile(filename);
-        tabPane = _tabPane;
-        LayersControl.getInstance().createNewLayer(layerGroup);
-        LayersControl.getInstance().repaint();
     }
 
     public void refreshHistoryButton(){
@@ -198,9 +157,26 @@ public class ControllerAdapter implements Initializable {
     public void buttonTextClicked() {
         input_status = Input_status.TEXT;
         labelStatus.setText("Text Tool");
+
+        if(LayersControl.getInstance().tabs.isEmpty())return;
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Text Tool");
+        dialog.setHeaderText("Text Tool - Add Text");
+        dialog.setContentText("Please enter your text:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(s -> {
+            LayersControl.getInstance().getLayerHistory().forward("Add text");
+            LayersControl.getInstance().getLayerGroup().appendLayer(
+                    LayerFactory.createTextLayer(100,100,s)
+            );
+            LayersControl.getInstance().repaint();
+        });
     }
 
     public void buttonClearClicked() {
+        if(LayersControl.getInstance().tabs.isEmpty())return;
         LayersControl.getInstance().getLayerHistory().forward("Clear");
         LayersControl.getInstance().getLayerGroup().clear();
         LayersControl.getInstance().repaint();
@@ -217,6 +193,84 @@ public class ControllerAdapter implements Initializable {
         LayersControl.getInstance().getLayerHistory().redo();
         LayersControl.getInstance().repaint();
         refreshHistoryButton();
+    }
+
+    public void buttonSelectFontClicked() throws Exception{
+        Stage stage=new Stage();
+        FontChooserFrame.getInstance().start(stage);
+    }
+
+    /**
+     *
+     */
+
+    public void showAbout() throws IOException {
+        String url = "https://github.com/i-Pear/Painting";
+        java.net.URI uri = java.net.URI.create(url);
+        java.awt.Desktop dp = java.awt.Desktop.getDesktop();
+        if (dp.isSupported(java.awt.Desktop.Action.BROWSE)) {
+            dp.browse(uri);
+        }
+    }
+
+    public void newFile() {
+        tabPane = _tabPane;
+        LayersControl.getInstance().createNewLayer();
+    }
+
+    public void export(){
+        // ask for fileName
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Export as...");
+        fileChooser.setInitialFileName("New File.png");
+        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("PNG File", "*.png");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+        File file = fileChooser.showSaveDialog(MainFrame.mainStage);
+        if(file==null)return;
+
+        WritableImage image=LayersControl.getInstance().getSnapshot();
+
+        try {
+            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+        }
+        catch (Exception ignored) {}
+    }
+
+    public void saveFile() throws IOException {
+        LayersControl.getInstance().getLayerGroup().saveFile();
+    }
+
+    public void saveFileAs() throws IOException {
+        LayersControl.getInstance().getLayerGroup().saveFileAs();
+    }
+
+    public void openFile() throws IOException, ClassNotFoundException {
+        // ask for fileName
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File...");
+        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("JPaint File", "*.jpf");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+        File file = fileChooser.showOpenDialog(MainFrame.mainStage);
+        if(file==null)return;
+        String filename = file.getAbsolutePath();
+
+        LayerGroup layerGroup=LayerGroup.readFile(filename);
+        tabPane = _tabPane;
+        LayersControl.getInstance().createNewLayer(layerGroup);
+        LayersControl.getInstance().repaint();
+    }
+
+    public void rasterizeButtonClicked(){
+        if(LayersControl.getInstance().tabs.isEmpty())return;
+        Image image=LayersControl.getInstance().getSnapshot();
+        LayersControl.getInstance().getLayerHistory().forward("Rasterized");
+        LayersControl.getInstance().getLayerGroup().clear();
+        LayersControl.getInstance().getLayerGroup().appendLayer(
+                LayerFactory.createBitmapLayer(0,0,image)
+        );
+        LayersControl.getInstance().repaint();
     }
 
 }

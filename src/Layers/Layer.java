@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 public abstract class Layer implements Serializable {
 
+    // static region
     public enum LayerType{LINE,OVAL,RECTANGLE,CIRCLE,TEXT,BITMAP, CURVE}
     public enum FillType{NO,FILL}
     public enum LineType {FULL,POINT,DASH}
@@ -18,7 +19,7 @@ public abstract class Layer implements Serializable {
     public LayerType layerType;
     public LineType lineType;
     public FillType fillType=FillType.NO;
-    public ColorInfo color=new ColorInfo(Color.BLUE);
+    public ColorInfo color;
     public float width=5;
     public float x_shifting=0,y_shifting=0;
 
@@ -48,8 +49,15 @@ public abstract class Layer implements Serializable {
 
     public abstract void applyShifting();
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public void setClone(Layer layer){
+        layer.layerType=layerType;
+        layer.lineType=lineType;
+        layer.fillType=fillType;
+        layer.color=new ColorInfo(color);
+        layer.width=width;
+        layer.x_shifting=x_shifting;
+        layer.y_shifting=y_shifting;
     }
+
+    public abstract Layer getClone();
 }

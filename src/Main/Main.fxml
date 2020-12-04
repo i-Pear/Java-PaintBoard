@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerAdapter">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
@@ -21,18 +20,18 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#undoButtonClicked" text="Undo" />
+                  <MenuItem mnemonicParsing="false" onAction="#redoButtonClicked" text="Redo" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Paint">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <RadioMenuItem mnemonicParsing="false" selected="true" text="Unspecified Action" />
+                <MenuItem mnemonicParsing="false" onAction="#rasterizeButtonClicked" text="Rasterize" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#showAbout" text="About" />
             </items>
           </Menu>
         </menus>
@@ -59,6 +58,9 @@
                   <Label prefHeight="17.0" prefWidth="80.0" text="         Fill" />
                   <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" prefWidth="80.0" text="Fill Off" />
                   <Separator prefWidth="80.0" />
+                  <Label prefHeight="17.0" prefWidth="80.0" text="        Font" />
+                  <Button fx:id="buttonSelectFont" mnemonicParsing="false" onAction="#buttonSelectFontClicked" prefWidth="80.0" text="Select Font" />
+                  <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="       Color" textAlignment="CENTER" />
                   <ColorPicker fx:id="colorPicker" onAction="#chooseColor" prefHeight="30.0" prefWidth="80.0">
                      <value>
@@ -78,6 +80,23 @@
                </items>
             </ToolBar>
          </left>
+         <right>
+            <BorderPane prefHeight="713.0" prefWidth="140.0" BorderPane.alignment="CENTER">
+               <center>
+                  <BorderPane prefHeight="713.0" prefWidth="140.0" BorderPane.alignment="CENTER">
+                     <center>
+                        <ListView fx:id="historyList" prefHeight="200.0" prefWidth="109.0" BorderPane.alignment="CENTER" />
+                     </center>
+                     <top>
+                        <Label text="History" BorderPane.alignment="CENTER" />
+                     </top>
+                  </BorderPane>
+               </center>
+               <left>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" BorderPane.alignment="CENTER" />
+               </left>
+            </BorderPane>
+         </right>
        </BorderPane>
    </center>
    <right>

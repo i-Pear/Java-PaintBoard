@@ -1,8 +1,8 @@
 package Layers;
 
-import Main.LayersControl;
 import controller.CanvasController;
 import controller.ControllerAdapter;
+import controller.FontChooserController;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -42,8 +42,12 @@ public class LayerFactory {
         );
     }
 
-    public static Layer createBitmapLayer(Image image) {
-        return new Layer_Bitmap(image);
+    public static Layer createTextLayer(int x,int y,String text){
+        return new Layer_Text(text, FontChooserController.font,x,y);
+    }
+
+    public static Layer createBitmapLayer(int x,int y,Image image) {
+        return new Layer_Bitmap(image,x,y);
     }
 
 }

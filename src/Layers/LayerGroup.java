@@ -2,24 +2,24 @@ package Layers;
 
 import Main.LayersControl;
 import Main.MainFrame;
-import controller.ControllerAdapter;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LayerGroup implements Serializable,Cloneable {
 
-    ArrayList<Layer> layers= new ArrayList<>();
+    public ArrayList<Layer> layers= new ArrayList<>();
     String fileName = "New File";
 
     String modifyDescription="New File";
 
     public LayerGroup getClone() {
         LayerGroup clone=new LayerGroup();
-        clone.layers=new ArrayList<>(layers);
+        for(Layer layer:layers){
+            clone.layers.add(layer.getClone());
+        }
         clone.fileName=fileName;
         clone.modifyDescription=modifyDescription;
         return clone;
@@ -44,6 +44,17 @@ public class LayerGroup implements Serializable,Cloneable {
             }
         }
         return null;
+    }
+
+    public int getLayerIndexByPosition(float x, float y) {
+        int size = layers.size();
+        // scan the layers decreasingly
+        for (int i = size - 1; i >= 0; i--) {
+            if (layers.get(i).isInner(x, y)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public static LayerGroup readFile(String filename) throws IOException, ClassNotFoundException {
