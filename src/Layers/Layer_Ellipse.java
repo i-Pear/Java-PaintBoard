@@ -3,19 +3,22 @@ package Layers;
 import com.sun.javafx.geom.Ellipse2D;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Implement for ellipse shape layer
+ */
 public class Layer_Ellipse extends Layer{
 
     Point2D leftUpper,rightBottom;
 
     Layer_Ellipse(double x0, double y0, double x1, double y1){
-        layerType=LayerType.OVAL;
+        layerType=LayerType.ELLIPSE;
 
         leftUpper=new Point2D(x0,y0);
         rightBottom=new Point2D(x1,y1);
     }
 
     public Layer_Ellipse(PointGroup pointGroup){
-        layerType=LayerType.RECTANGLE;
+        layerType=LayerType.ELLIPSE;
 
         leftUpper=pointGroup.p0;
         rightBottom=pointGroup.p1;

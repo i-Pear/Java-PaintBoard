@@ -16,6 +16,9 @@ import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Event receiver for font-choosing frame
+ */
 public class FontChooserController implements Initializable {
 
     @FXML
@@ -35,6 +38,10 @@ public class FontChooserController implements Initializable {
 
     public static FontInfo font=new FontInfo("Arial",30,FontPosture.REGULAR,FontWeight.NORMAL);
 
+    /**
+     * Singleton Pattern
+     */
+
     static FontChooserController instance;
 
     public FontChooserController() {
@@ -45,6 +52,9 @@ public class FontChooserController implements Initializable {
         return instance;
     }
 
+    /**
+     * Display font on the right side, for intuitive display
+     */
     public void redisplayFont(){
         String fontName=fontList.getSelectionModel().getSelectedItem();
         FontPosture fontPosture= italicCheckBox.isSelected()?FontPosture.ITALIC:FontPosture.REGULAR;
@@ -54,6 +64,11 @@ public class FontChooserController implements Initializable {
         preview.setFont(font.getFont());
     }
 
+    /**
+     * initialize event listeners and data, which not produced in JavaFX
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Search font in system
@@ -94,6 +109,9 @@ public class FontChooserController implements Initializable {
         });
     }
 
+    /**
+     * confirm button callback: close window
+     */
     public void confirm(){
         FontChooserFrame.fontStage.close();
     }

@@ -13,10 +13,12 @@ Text Tool
 Fill options
 Font options
 Color options
-
 Line Type options
 Line Width options
 
-Undo / Redo
+Undo / Redo Operations
 
-Multi-tabs
+Multi-tabs Working
+
+Layer Rasterize
+Layer Hierarchical Relationship Adjustment

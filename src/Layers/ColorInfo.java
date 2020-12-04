@@ -4,6 +4,9 @@ import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
+/**
+ * A self-made color class, because the native Color class is not Serializable
+ */
 public class ColorInfo implements Serializable {
 
     double R, G, B;

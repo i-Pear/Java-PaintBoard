@@ -3,6 +3,9 @@ package Layers;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Polygon;
 
+/**
+ * Implement for line shape layer
+ */
 public class Layer_Line extends Layer {
 
     Point2D start, end;
@@ -30,6 +33,13 @@ public class Layer_Line extends Layer {
         );
     }
 
+    /**
+     * calculates the direct distance from user's mouse to the line,
+     * then compares with its width/2
+     * @param x user's mouse position
+     * @param y user's mouse position
+     * @return result
+     */
     @Override
     public boolean isInner(float x, float y) {
         double dx = end.getX() - start.getX();

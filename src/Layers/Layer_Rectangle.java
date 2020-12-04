@@ -3,6 +3,9 @@ package Layers;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 
+/**
+ * Implement for ellipse shape layer
+ */
 public class Layer_Rectangle extends Layer {
 
     Point2D leftUpper, rightBottom;

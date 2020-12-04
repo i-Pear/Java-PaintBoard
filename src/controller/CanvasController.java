@@ -12,14 +12,21 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
+/**
+ * Including events callbacks
+ * Controls mouse events which occured on canvas
+ */
 public class CanvasController {
 
+
+    // Singleton Pattern
     private static CanvasController instance = new CanvasController();
 
     public static CanvasController getInstance() {
         return instance;
     }
 
+    // origin positions
     private boolean isPressed = false;
     private double x_start, y_start;
 
@@ -28,6 +35,9 @@ public class CanvasController {
 
     public static ContextMenu contextMenu;
 
+    /**
+     * initialize right-click menu for future use
+     */
     public CanvasController() {
         MenuItem upper = new MenuItem("Bring Forward");
         upper.setOnAction(e -> {
@@ -65,13 +75,19 @@ public class CanvasController {
             LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
             Layer temp = layerGroup.layers.get(selectedLayerIndex);
             layerGroup.layers.remove(selectedLayerIndex);
-            layerGroup.layers.add(0,temp);
+            layerGroup.layers.add(0, temp);
             LayersControl.getInstance().repaint();
         });
         contextMenu = new ContextMenu();
         contextMenu.getItems().addAll(lower, upper, top, bottom);
     }
 
+    /**
+     * return a pack of position infomation, in order to make arguments less
+     *
+     * @param e position
+     * @return position group
+     */
     private PointGroup getPointGroup(MouseEvent e) {
         return new PointGroup(
                 Math.min(x_start, e.getX()),
@@ -81,6 +97,12 @@ public class CanvasController {
         );
     }
 
+    /**
+     * a universal interface for creating shapes with automatically collected infomation
+     *
+     * @param e position
+     * @return Shape layer
+     */
     private Layer getCurrentDrawingLayer(MouseEvent e) {
         // will never call here
         return switch (ControllerAdapter.input_status) {
@@ -93,6 +115,12 @@ public class CanvasController {
     ArrayList<Layer_Line> current_free_path;
     public static Color color = Color.BLACK;
 
+    /**
+     * Enable or Disable items according to the index of layer user selected,
+     * then pop the menu
+     *
+     * @param e position
+     */
     public void contextMenuRequested(MouseEvent e) {
         selectedLayerIndex = LayersControl.getInstance().getLayerGroup().getLayerIndexByPosition((float) e.getX(), (float) e.getY());
         if (selectedLayerIndex == -1) {
@@ -111,6 +139,12 @@ public class CanvasController {
         contextMenu.show(LayersControl.getInstance().getActiveCanvas(), e.getScreenX(), e.getScreenY());
     }
 
+    /**
+     * Record initial mouse position info, or find the layer user tends to select
+     * Also do initializations when using "PEN" tool, create restore points and response right-click menu request
+     *
+     * @param e event
+     */
     public void mouseDown(MouseEvent e) {
         if (e.getButton() == MouseButton.SECONDARY) {
             contextMenuRequested(e);
@@ -119,7 +153,7 @@ public class CanvasController {
         // System.out.println("down");
         if (ControllerAdapter.input_status == ControllerAdapter.Input_status.SELECT) {
             selectedLayer = LayersControl.getInstance().getLayerGroup().getLayerByPosition((float) e.getX(), (float) e.getY());
-            if(selectedLayer!=null){
+            if (selectedLayer != null) {
                 LayersControl.getInstance().getLayerHistory().forward("Move Shape");
             }
             // System.out.println("selected");
@@ -136,6 +170,12 @@ public class CanvasController {
         isPressed = true;
     }
 
+    /**
+     * Create a new shape or apply move to according layer,
+     * save changes and repaint
+     *
+     * @param e event
+     */
     public void mouseRelease(MouseEvent e) {
         if (e.getButton() == MouseButton.SECONDARY) {
             return;
@@ -145,12 +185,13 @@ public class CanvasController {
 
         // if it is creating new shape
         {
-            switch (ControllerAdapter.input_status){
+            switch (ControllerAdapter.input_status) {
                 case RECTANGLE -> LayersControl.getInstance().getLayerHistory().forward("Create Rectangle");
                 case LINE -> LayersControl.getInstance().getLayerHistory().forward("Create Line");
                 case CIRCLE -> LayersControl.getInstance().getLayerHistory().forward("Create Circle");
                 case ELLIPSE -> LayersControl.getInstance().getLayerHistory().forward("Create Ellipse");
-                default -> {}
+                default -> {
+                }
             }
             Layer layer = getCurrentDrawingLayer(e);
             if (layer != null) layer.fillType = ControllerAdapter.doFill ? Layer.FillType.FILL : Layer.FillType.NO;
@@ -174,8 +215,13 @@ public class CanvasController {
         ControllerAdapter.getInstance().refreshHistoryButton();
     }
 
+    /**
+     * Dynamically draw temporary shapes to give user a visual experience
+     * Clear board, draw origin layers and stroke shape being draw
+     *
+     * @param e event
+     */
     public void mouseDrag(MouseEvent e) {
-        // System.out.println("move");
         if (!isPressed) {
             return;
         }
@@ -205,16 +251,11 @@ public class CanvasController {
             return;
         }
 
-        // draw
+        // draw background
         LayersControl.getInstance().repaint();
 
         // specially deal with text tool
         if (ControllerAdapter.input_status == ControllerAdapter.Input_status.TEXT) {
-            Layer bound = LayerFactory.createShapeLayer(ControllerAdapter.input_status, getPointGroup(e));
-            bound.fillType = Layer.FillType.NO;
-            bound.width = 3;
-            bound.lineType = Layer.LineType.FULL;
-            bound.draw(graphics);
             return;
         }
 
@@ -223,6 +264,12 @@ public class CanvasController {
         if (temp != null) temp.draw(graphics);
     }
 
+    /**
+     * Change cursor type to "MOVE" while mouse is on shape
+     * otherwise change it to "DEFAULT"
+     *
+     * @param e event
+     */
     public void mouseMove(MouseEvent e) {
         if (isPressed) return;
         if (ControllerAdapter.input_status != ControllerAdapter.Input_status.SELECT) {

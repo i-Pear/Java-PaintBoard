@@ -10,10 +10,13 @@ import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Controls multi-tabs and corresponding canvases
+ * Produces interface to interact with the displaying canvas
+ */
 public class LayersControl {
 
     private ArrayList<Canvas> canvas = new ArrayList<>();
@@ -21,6 +24,9 @@ public class LayersControl {
     private int activeID;
     private ArrayList<LayerHistory> layerGroups = new ArrayList<>();
 
+    /**
+     * Singleton Pattern
+     */
     private static LayersControl instance = new LayersControl();
 
     private LayersControl() {
@@ -31,28 +37,49 @@ public class LayersControl {
         return instance;
     }
 
+    /**
+     * Following are agent functions mapped to active canvas
+     */
+
     public Canvas getActiveCanvas() {
         return canvas.get(activeID);
     }
 
+    /**
+     * mapped to LayerGroup.repaint()
+     */
     public void repaint() {
         getInstance().getActiveCanvas().getGraphicsContext2D().setFill(Color.WHITE);
         getInstance().getActiveCanvas().getGraphicsContext2D().fillRect(0, 0, LayersControl.getInstance().getActiveCanvas().getWidth(), LayersControl.getInstance().getActiveCanvas().getHeight());
         getInstance().getLayerGroup().draw(getInstance().getActiveCanvas().getGraphicsContext2D());
     }
 
+    /**
+     * get active LayerGroup
+     * @return LayerGroup
+     */
     public LayerGroup getLayerGroup() {
         return layerGroups.get(activeID).getCurrent();
     }
 
+    /**
+     * get active LayerHistory
+     * @return LayerHistory
+     */
     public LayerHistory getLayerHistory(){
         return layerGroups.get(activeID);
     }
 
+    /**
+     * mapped to LayerGroup.createNewLayer()
+     */
     public void createNewLayer(){
         createNewLayer(null);
     }
 
+    /**
+     * mapped to LayerGroup.createNewLayer()
+     */
     public void createNewLayer(LayerGroup layerGroup) {
         // create new canvas
         Canvas canvas_new = new Canvas();
@@ -82,18 +109,28 @@ public class LayersControl {
         layerGroups.add(new LayerHistory(layerGroup));
     }
 
+    /**
+     * mapped to canvas.getSnapshot()
+     */
     public WritableImage getSnapshot() {
         WritableImage image = new WritableImage((int) getInstance().canvas.get(activeID).getWidth(), (int) getInstance().canvas.get(activeID).getHeight());
         canvas.get(activeID).snapshot(null, image);
         return image;
     }
 
+    /**
+     * un-bind tab and canvas when closing them
+     */
     void unRegisterTab(){
         canvas.remove(activeID);
         tabs.remove(activeID);
         layerGroups.remove(activeID);
     }
 
+    /**
+     * callback for tab closing
+     * @param event Closing event
+     */
     public void tabClosing(Event event) {
         if(!LayersControl.getInstance().getLayerHistory().saved){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -126,6 +163,10 @@ public class LayersControl {
         }
     }
 
+    /**
+     * Check if all tabs are saved, for checks on window closing
+     * @return check result
+     */
     public boolean isAllSaved(){
         for(LayerHistory layerHistory:layerGroups){
             if(!layerHistory.saved)return false;
@@ -133,6 +174,9 @@ public class LayersControl {
         return true;
     }
 
+    /**
+     * callback for tab changing
+     */
     public void tabChange() {
         for (int i = 0; i < tabs.size(); i++) {
             if (ControllerAdapter.tabPane.getSelectionModel().isSelected(i)) {
@@ -141,6 +185,7 @@ public class LayersControl {
                 break;
             }
         }
+        getLayerHistory().updateHistoryList();
     }
 
 }

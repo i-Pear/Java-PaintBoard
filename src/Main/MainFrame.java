@@ -13,6 +13,9 @@ import javafx.stage.WindowEvent;
 
 import java.util.Optional;
 
+/**
+ * Main Window Frame Launcher
+ */
 public class MainFrame extends Application {
 
     public static Stage mainStage;

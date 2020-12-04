@@ -4,6 +4,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+/**
+ * Implement for bitmap image layer
+ */
 public class Layer_Bitmap extends Layer {
 
     Image image;
