@@ -73,10 +73,19 @@ public class LayerGroup implements Serializable,Cloneable {
         return layerGroup;
     }
 
+    void deleteCachedImage(){
+        for(Layer layer:layers){
+            if(layer instanceof Layer_Bitmap){
+                ((Layer_Bitmap) layer).deleteCache();
+            }
+        }
+    }
+
     /**
      * try to save file with existing filename
      */
     public void saveFile() throws IOException {
+        deleteCachedImage();
         // check if filename available
         File file = new File(fileName);
         // if file doesn't exist, ask for a new filename
@@ -94,6 +103,7 @@ public class LayerGroup implements Serializable,Cloneable {
      * try to save file with a new filename
      */
     public void saveFileAs() throws IOException {
+        deleteCachedImage();
         // ask for fileName
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as...");
@@ -108,6 +118,7 @@ public class LayerGroup implements Serializable,Cloneable {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(fileName));
         objectOutputStream.writeObject(this);
         objectOutputStream.close();
+
         LayersControl.getInstance().getLayerHistory().saved=true;
     }
 

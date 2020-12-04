@@ -3,8 +3,11 @@ package Layers;
 import Controller.CanvasController;
 import Controller.ControllerAdapter;
 import Controller.FontChooserController;
-import javafx.scene.image.Image;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 
+import javax.media.jai.remote.SerializableRenderedImage;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -49,8 +52,12 @@ public class LayerFactory {
         return new Layer_Text(text, FontChooserController.font,x,y);
     }
 
-    public static Layer createBitmapLayer(int x,int y,Image image) {
-        return new Layer_Bitmap(image,x,y);
+    public static Layer createBitmapLayer(int x, int y, WritableImage image) {
+        BufferedImage bufferedImage= SwingFXUtils.fromFXImage(image, null);
+        return new Layer_Bitmap(
+                new SerializableRenderedImage(bufferedImage,true)
+                ,x,y
+        );
     }
 
 }

@@ -10,7 +10,6 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
@@ -278,7 +277,9 @@ public class ControllerAdapter implements Initializable {
 
     public void rasterizeButtonClicked(){
         if(LayersControl.getInstance().tabs.isEmpty())return;
-        Image image=LayersControl.getInstance().getSnapshot();
+        WritableImage image=LayersControl.getInstance().getSnapshot();
+
+
         LayersControl.getInstance().getLayerHistory().forward("Rasterized");
         LayersControl.getInstance().getLayerGroup().clear();
         LayersControl.getInstance().getLayerGroup().appendLayer(

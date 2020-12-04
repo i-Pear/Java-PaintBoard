@@ -185,7 +185,7 @@ public class LayersControl {
                 break;
             }
         }
-        getLayerHistory().updateHistoryList();
+        if(!layerGroups.isEmpty())getLayerHistory().updateHistoryList();
     }
 
 }
