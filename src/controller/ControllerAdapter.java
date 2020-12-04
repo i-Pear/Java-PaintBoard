@@ -86,16 +86,16 @@ public class ControllerAdapter implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setButtonIcon(buttonSelect, "resources/Big/select.png");
-        setButtonIcon(buttonFreePen, "resources/Big/pen.png");
-        setButtonIcon(buttonLine, "resources/Big/line.png");
-        setButtonIcon(buttonRectangle, "resources/Big/rectangle.png");
-        setButtonIcon(buttonCircle, "resources/Big/circle.png");
-        setButtonIcon(buttonEllipse, "resources/Big/ellipse.png");
-        setButtonIcon(buttonText, "resources/Big/text.png");
-        setButtonIcon(buttonClear, "resources/Big/clear.png");
+        setButtonIcon(buttonSelect, "resources/select.png");
+        setButtonIcon(buttonFreePen, "resources/pen.png");
+        setButtonIcon(buttonLine, "resources/line.png");
+        setButtonIcon(buttonRectangle, "resources/rectangle.png");
+        setButtonIcon(buttonCircle, "resources/circle.png");
+        setButtonIcon(buttonEllipse, "resources/ellipse.png");
+        setButtonIcon(buttonText, "resources/text.png");
+        setButtonIcon(buttonClear, "resources/clear.png");
         {
-            ImageView imageView = new ImageView("resources/Big/fill.png");
+            ImageView imageView = new ImageView("resources/fill.png");
             imageView.setFitWidth(22);
             imageView.setFitHeight(22);
             buttonFill.setGraphic(imageView);
