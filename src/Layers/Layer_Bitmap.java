@@ -19,6 +19,13 @@ public class Layer_Bitmap extends Layer {
     Image memoryImage;
     int pos_x, pos_y;
 
+    public Layer_Bitmap(SerializableRenderedImage image, int x, int y,Image memoryImage) {
+        this.image = image;
+        this.memoryImage=memoryImage;
+        pos_x=x;
+        pos_y=y;
+    }
+
     public Layer_Bitmap(SerializableRenderedImage image, int x, int y) {
         this.image = image;
         pos_x=x;
@@ -64,7 +71,7 @@ public class Layer_Bitmap extends Layer {
 
     @Override
     public Layer getClone() {
-        return new Layer_Bitmap(image,pos_x,pos_y);
+        return new Layer_Bitmap(image,pos_x,pos_y,memoryImage);
     }
 
 }

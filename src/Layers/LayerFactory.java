@@ -4,7 +4,7 @@ import Controller.CanvasController;
 import Controller.ControllerAdapter;
 import Controller.FontChooserController;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.WritableImage;
+import javafx.scene.image.Image;
 
 import javax.media.jai.remote.SerializableRenderedImage;
 import java.awt.image.BufferedImage;
@@ -52,7 +52,7 @@ public class LayerFactory {
         return new Layer_Text(text, FontChooserController.font,x,y);
     }
 
-    public static Layer createBitmapLayer(int x, int y, WritableImage image) {
+    public static Layer createBitmapLayer(int x, int y, Image image) {
         BufferedImage bufferedImage= SwingFXUtils.fromFXImage(image, null);
         return new Layer_Bitmap(
                 new SerializableRenderedImage(bufferedImage,true)

@@ -10,6 +10,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.stage.FileChooser;
@@ -17,6 +18,8 @@ import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -32,12 +35,12 @@ public class ControllerAdapter implements Initializable {
     public TabPane _tabPane;
     public static ControllerAdapter instance;
 
-    public enum Input_status {SELECT, PEN, LINE, RECTANGLE, CIRCLE, ELLIPSE, TEXT}
+    public enum Input_status {SELECT, PEN, LINE, RECTANGLE, CIRCLE, ELLIPSE, TEXT,ERASER}
 
     public static Input_status input_status = Input_status.SELECT;
 
     @FXML
-    public Button buttonSelect, buttonFreePen, buttonLine, buttonRectangle, buttonCircle, buttonEllipse, buttonText, buttonClear,buttonUndo,buttonRedo;
+    public Button buttonSelect, buttonFreePen, buttonLine, buttonRectangle, buttonCircle, buttonEllipse, buttonText, buttonClear,buttonUndo,buttonRedo,buttonEraser;
 
     @FXML
     Label labelStatus;
@@ -93,6 +96,7 @@ public class ControllerAdapter implements Initializable {
         setButtonIcon(buttonEllipse, "Resources/ellipse.png");
         setButtonIcon(buttonText, "Resources/text.png");
         setButtonIcon(buttonClear, "Resources/clear.png");
+        setButtonIcon(buttonEraser,"Resources/eraser.png");
         {
             ImageView imageView = new ImageView("Resources/fill.png");
             imageView.setFitWidth(22);
@@ -188,6 +192,11 @@ public class ControllerAdapter implements Initializable {
         });
     }
 
+    public void buttonEraserClicked(){
+        input_status=Input_status.ERASER;
+        labelStatus.setText("Eraser Tool");
+    }
+
     public void buttonClearClicked() {
         if(LayersControl.getInstance().tabs.isEmpty())return;
         LayersControl.getInstance().getLayerHistory().forward("Clear");
@@ -279,11 +288,28 @@ public class ControllerAdapter implements Initializable {
         if(LayersControl.getInstance().tabs.isEmpty())return;
         WritableImage image=LayersControl.getInstance().getSnapshot();
 
-
         LayersControl.getInstance().getLayerHistory().forward("Rasterized");
         LayersControl.getInstance().getLayerGroup().clear();
         LayersControl.getInstance().getLayerGroup().appendLayer(
                 LayerFactory.createBitmapLayer(0,0,image)
+        );
+        LayersControl.getInstance().repaint();
+    }
+
+    public void insertPhotoButtonClicked() throws FileNotFoundException {
+        if(LayersControl.getInstance().tabs.isEmpty())return;
+        // ask for fileName
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open File...");
+        FileChooser.ExtensionFilter filter=new FileChooser.ExtensionFilter("Photo File", "*.png");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setSelectedExtensionFilter(filter);
+        File file = fileChooser.showOpenDialog(MainFrame.mainStage);
+        if(file==null)return;
+
+        LayersControl.getInstance().getLayerHistory().forward("Add picture");
+        LayersControl.getInstance().getLayerGroup().appendLayer(
+                LayerFactory.createBitmapLayer(20,20,new Image(new FileInputStream(file.getAbsolutePath())))
         );
         LayersControl.getInstance().repaint();
     }

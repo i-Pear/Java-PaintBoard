@@ -14,16 +14,12 @@ public class Layer_Circle extends Layer {
         layerType = LayerType.CIRCLE;
 
         double d = Math.min(x1 - x0, y1 - y0);
-        leftUpper = new Point2D(x0, x0 + d);
-        rightBottom = new Point2D(x1, y1 + d);
+        leftUpper = new Point2D(x0, y0);
+        rightBottom = new Point2D(x0 + d, y0 + d);
     }
 
     public Layer_Circle(PointGroup pointGroup) {
-        layerType = LayerType.CIRCLE;
-
-        int d = (int) Math.min(pointGroup.p1.getX() - pointGroup.p0.getX(), pointGroup.p1.getY() - pointGroup.p0.getY());
-        leftUpper = new Point2D(pointGroup.p0.getX(), pointGroup.p0.getY());
-        rightBottom = new Point2D(pointGroup.p0.getX() + d, pointGroup.p0.getY() + d);
+        this(pointGroup.p0.getX(),pointGroup.p0.getY(),pointGroup.p1.getX(),pointGroup.p1.getY());
     }
 
     @Override

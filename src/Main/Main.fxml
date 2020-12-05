@@ -27,6 +27,7 @@
             <Menu mnemonicParsing="false" text="Paint">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#rasterizeButtonClicked" text="Rasterize" />
+                <MenuItem mnemonicParsing="false" onAction="#insertPhotoButtonClicked" text="Insert photo" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -53,13 +54,14 @@
                   <Button fx:id="buttonCircle" mnemonicParsing="false" onAction="#buttonCircleClicked" prefWidth="80.0" text="Circle" />
                   <Button fx:id="buttonEllipse" mnemonicParsing="false" onAction="#buttonEllipseClicked" prefWidth="80.0" text="Ellipse" />
                   <Button fx:id="buttonText" mnemonicParsing="false" onAction="#buttonTextClicked" prefWidth="80.0" text="Text" />
+                  <Button fx:id="buttonEraser" mnemonicParsing="false" onAction="#buttonEraserClicked" prefWidth="80.0" text="Eraser" />
                   <Button fx:id="buttonClear" mnemonicParsing="false" onAction="#buttonClearClicked" prefWidth="80.0" text="Clear" />
                   <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="         Fill" />
                   <ToggleButton fx:id="buttonFill" mnemonicParsing="false" onAction="#toggleFill" prefWidth="80.0" text="Fill Off" />
                   <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="        Font" />
-                  <Button fx:id="buttonSelectFont" mnemonicParsing="false" onAction="#buttonSelectFontClicked" prefWidth="80.0" text="Select Font" />
+                  <Button mnemonicParsing="false" onAction="#buttonSelectFontClicked" prefWidth="80.0" text="Select Font" />
                   <Separator prefWidth="80.0" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="       Color" textAlignment="CENTER" />
                   <ColorPicker fx:id="colorPicker" onAction="#chooseColor" prefHeight="30.0" prefWidth="80.0">

@@ -6,6 +6,7 @@ import javafx.scene.Cursor;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -164,6 +165,16 @@ public class CanvasController {
         if (ControllerAdapter.input_status == ControllerAdapter.Input_status.PEN) {
             LayersControl.getInstance().getLayerHistory().forward("Create Free Line");
             current_free_path = new ArrayList<>();
+        }else if(ControllerAdapter.input_status == ControllerAdapter.Input_status.ERASER){
+            LayersControl.getInstance().getLayerHistory().forward("Eraser");
+            // Rasterize layer
+            Image image=LayersControl.getInstance().getSnapshot();
+            LayersControl.getInstance().getLayerGroup().clear();
+            LayersControl.getInstance().getLayerGroup().appendLayer(
+                    LayerFactory.createBitmapLayer(0,0,image)
+            );
+            LayersControl.getInstance().repaint();
+            current_free_path = new ArrayList<>();
         }
         x_start = e.getX();
         y_start = e.getY();
@@ -208,6 +219,22 @@ public class CanvasController {
             Layer layer = LayerFactory.createCurveLayer(current_free_path);
             LayersControl.getInstance().getLayerGroup().appendLayer(layer);
             current_free_path = null;
+        }else if(ControllerAdapter.input_status == ControllerAdapter.Input_status.ERASER){
+            Layer_Curve layer = new Layer_Curve(
+                    current_free_path,
+                    new ColorInfo(Color.WHITE),
+                    Layer.LineType.FULL,
+                    ControllerAdapter.getInstance().getLineWidth()
+            );
+            LayersControl.getInstance().getLayerGroup().appendLayer(layer);
+            // Rasterize layer
+            Image image=LayersControl.getInstance().getSnapshot();
+            LayersControl.getInstance().getLayerGroup().clear();
+            LayersControl.getInstance().getLayerGroup().appendLayer(
+                    LayerFactory.createBitmapLayer(0,0,image)
+            );
+            LayersControl.getInstance().repaint();
+            current_free_path = null;
         }
 
         LayersControl.getInstance().repaint();
@@ -244,6 +271,18 @@ public class CanvasController {
             line.lineType = ControllerAdapter.getInstance().getLineType();
             line.width = ControllerAdapter.getInstance().getLineWidth();
             line.color = new ColorInfo(color);
+            x_start = e.getX();
+            y_start = e.getY();
+            line.draw(graphics);
+            current_free_path.add(line);
+            return;
+        }else if (ControllerAdapter.input_status == ControllerAdapter.Input_status.ERASER){
+            Layer_Line line = new Layer_Line(
+                    new PointGroup(x_start, y_start, e.getX(), e.getY())
+            );
+            line.lineType = Layer.LineType.FULL;
+            line.width = ControllerAdapter.getInstance().getLineWidth();
+            line.color = new ColorInfo(Color.WHITE);
             x_start = e.getX();
             y_start = e.getY();
             line.draw(graphics);

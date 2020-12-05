@@ -18,10 +18,7 @@ public class Layer_Ellipse extends Layer{
     }
 
     public Layer_Ellipse(PointGroup pointGroup){
-        layerType=LayerType.ELLIPSE;
-
-        leftUpper=pointGroup.p0;
-        rightBottom=pointGroup.p1;
+        this(pointGroup.p0.getX(),pointGroup.p0.getY(),pointGroup.p1.getX(),pointGroup.p1.getY());
     }
 
     @Override
