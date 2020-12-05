@@ -43,6 +43,7 @@ public class CanvasController {
         MenuItem upper = new MenuItem("Bring Forward");
         upper.setOnAction(e -> {
             if (selectedLayerIndex == -1) return;
+            LayersControl.getInstance().getLayerHistory().forward("Bring Forward");
             LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
             Layer temp = layerGroup.layers.get(selectedLayerIndex);
             layerGroup.layers.set(selectedLayerIndex, layerGroup.layers.get(selectedLayerIndex + 1));
@@ -53,6 +54,7 @@ public class CanvasController {
         MenuItem lower = new MenuItem("Bring Backward");
         lower.setOnAction(actionEvent -> {
             if (selectedLayerIndex == -1) return;
+            LayersControl.getInstance().getLayerHistory().forward("Bring Backward");
             LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
             Layer temp = layerGroup.layers.get(selectedLayerIndex);
             layerGroup.layers.set(selectedLayerIndex, layerGroup.layers.get(selectedLayerIndex - 1));
@@ -63,6 +65,7 @@ public class CanvasController {
         MenuItem top = new MenuItem("Bring TopMost");
         top.setOnAction(actionEvent -> {
             if (selectedLayerIndex == -1) return;
+            LayersControl.getInstance().getLayerHistory().forward("Bring TopMost");
             LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
             Layer temp = layerGroup.layers.get(selectedLayerIndex);
             layerGroup.layers.remove(selectedLayerIndex);
@@ -73,14 +76,24 @@ public class CanvasController {
         MenuItem bottom = new MenuItem("Bring Bottom");
         bottom.setOnAction(actionEvent -> {
             if (selectedLayerIndex == -1) return;
+            LayersControl.getInstance().getLayerHistory().forward("Bring Bottom");
             LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
             Layer temp = layerGroup.layers.get(selectedLayerIndex);
             layerGroup.layers.remove(selectedLayerIndex);
             layerGroup.layers.add(0, temp);
             LayersControl.getInstance().repaint();
         });
+
+        MenuItem delete = new MenuItem("Delete Layer");
+        delete.setOnAction(actionEvent -> {
+            if (selectedLayerIndex == -1) return;
+            LayersControl.getInstance().getLayerHistory().forward("Delete Layer");
+            LayerGroup layerGroup = LayersControl.getInstance().getLayerGroup();
+            layerGroup.layers.remove(selectedLayerIndex);
+            LayersControl.getInstance().repaint();
+        });
         contextMenu = new ContextMenu();
-        contextMenu.getItems().addAll(lower, upper, top, bottom);
+        contextMenu.getItems().addAll(lower, upper, top, bottom, delete);
     }
 
     /**
@@ -130,6 +143,7 @@ public class CanvasController {
             contextMenu.getItems().get(1).setDisable(true);
             contextMenu.getItems().get(2).setDisable(true);
             contextMenu.getItems().get(3).setDisable(true);
+            contextMenu.getItems().get(4).setDisable(true);
             return;
         }
         // check whether layer can move upper/lower
@@ -137,6 +151,7 @@ public class CanvasController {
         contextMenu.getItems().get(1).setDisable(!(selectedLayerIndex < LayersControl.getInstance().getLayerGroup().layers.size() - 1));
         contextMenu.getItems().get(2).setDisable(selectedLayerIndex == LayersControl.getInstance().getLayerGroup().layers.size() - 1);
         contextMenu.getItems().get(3).setDisable(selectedLayerIndex == 0);
+        contextMenu.getItems().get(4).setDisable(false);
         contextMenu.show(LayersControl.getInstance().getActiveCanvas(), e.getScreenX(), e.getScreenY());
     }
 
