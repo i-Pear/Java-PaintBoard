@@ -9,6 +9,7 @@
 - Circle Tool
 - Ellipse Tool
 - Text Tool
+- Insert pictures
 
 - Fill options
 - Font options
@@ -22,3 +23,5 @@
 
 - Layer Rasterize
 - Layer Hierarchical Relationship Adjustment
+
+#### Based on JavaFX.
